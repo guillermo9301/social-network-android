@@ -30,7 +30,7 @@ import com.ga.social_media_app.R
 fun ReactionsView() {
     //variable state para el boton like
     var like by remember { mutableStateOf(false) }
-    var likeIcon = if (like) Icons.Default.Favorite else Icons.Default.FavoriteBorder
+    val likeIcon = if (like) Icons.Default.Favorite else Icons.Default.FavoriteBorder
 
     Row (horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
