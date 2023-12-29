@@ -1,7 +1,9 @@
 package com.ga.social_media_app.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,14 +34,15 @@ import com.ga.social_media_app.viewModels.StoriesViewModel
 
 @Composable
 fun StoriesView(
-    storiesViewModel: StoriesViewModel = viewModel()
+    storiesViewModel: StoriesViewModel = viewModel(),
+    onItemSelected: (String) -> Unit
 ) {
     storiesViewModel.fetchData()
     val dataList: List<dataResponse> = storiesViewModel.dataList.value
 
     LazyRow (
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        //modifier = Modifier.padding(horizontal = 8.dp)
+        modifier = Modifier.padding(horizontal = 8.dp)
     ){
         items(dataList) { dataItem ->
             Column (
@@ -60,6 +63,10 @@ fun StoriesView(
                             color = Color.Magenta,
                             shape = CircleShape,
                         )
+                        .clickable {
+                            onItemSelected(dataItem.id)
+                            Log.d("DATA", "Usuario "+ dataItem.id)
+                        }
                 )
 
                 //name and lastname

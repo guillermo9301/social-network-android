@@ -5,7 +5,7 @@ data class dataResponse(
     val name: String,
     val lastname: String,
     val userPhoto: String,
-    val photoLibrary: Array<String>,
+    val photoLibrary: List<String>,
     val description_line_1: String,
     val description_line_2: String
 )
