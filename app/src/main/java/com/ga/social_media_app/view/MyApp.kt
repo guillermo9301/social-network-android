@@ -10,7 +10,6 @@ fun MyApp() {
     Column {
         HeaderView()
         StoriesView()
-
         PhotoView()
         ReactionsView()
     }

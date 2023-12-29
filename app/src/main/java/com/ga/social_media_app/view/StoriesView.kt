@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,95 +23,56 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.ga.social_media_app.R
+import com.ga.social_media_app.data_models.DataApi
+import com.ga.social_media_app.data_models.dataResponse
+import com.ga.social_media_app.viewModels.StoriesViewModel
 
 @Composable
+fun StoriesView(
+    storiesViewModel: StoriesViewModel = viewModel()
+) {
+    storiesViewModel.fetchData()
+    val dataList: List<dataResponse> = storiesViewModel.dataList.value
 
-fun StoriesView() {
-
-    Row (
+    LazyRow (
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.padding(horizontal = 8.dp)){
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            //modifier = Modifier.padding(horizontal = 8.dp)
-        ){
-            //UserImage
-            Image(painterResource(id = R.drawable.chikitin),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(70.dp)
-                    .clip(shape = CircleShape)
-                    .border(
-                        width = 2.dp,
-                        color = Color.Magenta,
-                        shape = CircleShape,
-                    )
-            )
-
-            //name and lastname
+        //modifier = Modifier.padding(horizontal = 8.dp)
+    ){
+        items(dataList) { dataItem ->
             Column (
-                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(horizontal = 8.dp)
+
+            ){
+                //UserImage
+                AsyncImage(
+                    model = dataItem.userPhoto,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(70.dp)
+                        .clip(shape = CircleShape)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Magenta,
+                            shape = CircleShape,
+                        )
+                )
+
+                //name and lastname
+                Column (
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                Text(text = "Fonchito")
-                Text(text = "Anticona")
+                    Text(text = dataItem.name)
+                    Text(text = dataItem.lastname)
+                }
             }
         }
 
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            //UserImage
-            Image(painterResource(id = R.drawable.sekiro),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(70.dp)
-                    .clip(CircleShape)
-                    .border(
-                        width = 2.dp,
-                        color = Color.Magenta,
-                        shape = CircleShape,
-                    )
-
-            )
-            //name and lastname
-            Column (
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                Text(text = "Fonchito")
-                Text(text = "Anticona")
-            }
-        }
-
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            //UserImage
-            Image(painterResource(id = R.drawable.chikitin),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(70.dp)
-                    .clip(shape = CircleShape)
-                    .border(
-                        width = 2.dp,
-                        color = Color.Magenta,
-                        shape = CircleShape,
-                    )
-            )
-            //name and lastname
-            Column (
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                Text(text = "Fonchito")
-                Text(text = "Anticona")
-            }
-        }
     }
 
 }
